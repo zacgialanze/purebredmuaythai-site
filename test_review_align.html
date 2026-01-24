@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Test Alignment</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="about-hero.css">
+  <style>
+    body{background:#111;padding:40px;color:#fff;}
+    .test-container{max-width:600px;margin:0 auto;}
+    /* override for testing alignment */
+    .sticker .head{
+      justify-content:center;
+      margin-left:-14px;
+    }
+    .sticker .head > div{
+      flex:1;
+      text-align:center;
+    }
+    .sticker .name,
+    .sticker .time{
+      display:block;
+    }
+    .sticker .stars{
+      width:100%;
+      text-align:center;
+    }
+  </style>
+</head>
+<body>
+  <div class="test-container">
+    <article class="sticker">
+      <div class="head">
+        <img src="assets/doglogo.png" alt=""/>
+        <div>
+          <div class="name">Jeff Thompson</div>
+          <div class="time">a year ago</div>
+        </div>
+      </div>
+      <div class="stars">★★★★★</div>
+      <div class="text">I rarely give reviews but Purebred Muay Thai deserve 5 stars plus!!!. This gym will give you that edge in life that most</div>
+    </article>
+  </div>
+</body>
+</html>

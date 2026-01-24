@@ -1,0 +1,201 @@
+/*
+ * Timetable styles copied from BADBUTGOODTIMETABLE.
+ * These styles define the structure, colors and glow effects for the
+ * interactive timetable component. By scoping custom CSS variables
+ * inside the `.tt4` wrapper we avoid interfering with the rest of the
+ * site’s design. When you drop this file into the timetable page
+ * alongside `style.css`, it will apply only to the timetable elements.
+ */
+
+.tt4 {
+  /* Custom color palette for the timetable */
+  --bg:    #0b0c11;
+  --ink:   #e8ebf0;
+  --muted: #9aa3b2;
+  --line:  #1c1f2a;
+  --accent:#ffd34d;
+  width: min(1100px, 92%);
+  margin: 28px auto 70px;
+  position: relative;
+}
+
+.tt4::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.tt4 > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Header */
+.tt4-head {
+  /* Center the heading and sub heading vertically and horizontally */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.tt4-head h1 {
+  font-size: 40px;
+  margin: 0 0 6px;
+  text-shadow: 0 0 6px rgba(255,255,255,0.18), 0 0 18px rgba(255,255,255,0.10);
+  animation: neonPulse 7s ease-in-out infinite;
+}
+@keyframes neonPulse {
+  0%,100% { text-shadow: 0 0 4px rgba(255,255,255,0.12), 0 0 12px rgba(255,255,255,0.06); }
+  50%     { text-shadow: 0 0 10px rgba(255,255,255,0.26), 0 0 26px rgba(255,255,255,0.16); }
+}
+.tt4-head .sub {
+  color: var(--muted);
+  margin: 0 0 12px;
+  text-align: center;
+}
+
+/* Filters */
+/* Filters */
+.tt4-filters {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 10px 0 18px;
+}
+/* Each filter appears as a pill with a golden border and gentle glow.
+   Using built‑in checkboxes with accent‑color ensures the tick mark is small
+   and aligned nicely like in the original BADBUTGOODTIMETABLE design. */
+.tt4-filters label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 2px solid var(--accent);
+  border-radius: 999px;
+  background: #101118;
+  font-weight: 700;
+  font-size: 15px;
+  /* golden glow around the pill */
+  box-shadow: 0 0 8px rgba(255,211,77,0.35), 0 0 18px rgba(255,211,77,0.18);
+  cursor: pointer;
+}
+/* Use the native checkbox appearance with a golden accent colour so the tick
+   boxes stay compact and do not distort the pill layout */
+.tt4-filters input {
+  accent-color: var(--accent);
+  width: 16px;
+  height: 16px;
+}
+
+/* Grid */
+.tt4-grid {
+  display: grid;
+  grid-template-columns: repeat(7,1fr);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.tt4-grid .tt4-day {
+  background: rgba(17,19,26,0.86);
+  padding: 14px;
+  text-align: center;
+  font-weight: 900;
+  border-right: 1px solid var(--line);
+}
+.tt4-grid .tt4-day:last-child {
+  border-right: 0;
+}
+
+.tt4-grid .tt4-cell {
+  background: linear-gradient(180deg, rgba(15,16,22,0.80), rgba(13,14,20,0.80));
+  min-height: 420px;
+  border-right: 1px solid var(--line);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.tt4-grid .tt4-cell:nth-child(odd) {
+  background: linear-gradient(180deg, rgba(15,16,23,0.78), rgba(13,14,21,0.78));
+}
+.tt4-grid .tt4-cell:last-child {
+  border-right: 0;
+}
+
+/* Slot (class block) */
+.slot {
+  background: rgba(23,24,35,0.90);
+  border: 1px solid rgba(37,39,54,0.85);
+  border-radius: 14px;
+  padding: 12px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,.25);
+}
+.slot .time {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 700;
+}
+.slot .name {
+  font-weight: 900;
+  margin-top: 4px;
+}
+.tt4-grid .closed .slot {
+  background: rgba(23,24,35,0.90);
+  border: 1px solid rgba(37,39,54,0.85);
+  border-radius: 14px;
+  padding: 12px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,.25);
+}
+.tt4-grid .closed .name {
+  letter-spacing: 2px;
+}
+
+/* Responsive layout */
+@media (max-width: 900px) {
+  .tt4-grid {
+    grid-template-columns: repeat(3,1fr);
+  }
+}
+@media (max-width: 640px) {
+  .tt4-grid {
+    grid-template-columns: 1fr;
+  }
+  .tt4-grid .tt4-cell {
+    background: linear-gradient(180deg, rgba(15,16,22,0.80), rgba(13,14,20,0.80));
+    min-height: 420px;
+    border-right: 1px solid var(--line);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+/* Purebred Glow Edition enhancements */
+.tt4-head h1 {
+  text-shadow: 0 0 8px rgba(180,205,255,0.35), 0 0 22px rgba(180,205,255,0.22);
+  animation: neonPulsePB 6s ease-in-out infinite;
+}
+@keyframes neonPulsePB {
+  0%,100% { text-shadow: 0 0 6px rgba(180,205,255,0.25), 0 0 16px rgba(180,205,255,0.15); }
+  50%      { text-shadow: 0 0 14px rgba(180,205,255,0.50), 0 0 30px rgba(180,205,255,0.28); }
+}
+/* Active filter glow (use .on class from JS)
+   When a filter is active, intensify the golden border and glow */
+.tt4-filters label.on {
+  border-color: var(--accent);
+  box-shadow: 0 0 10px rgba(255,211,77,0.40), 0 0 26px rgba(255,211,77,0.20);
+}
+/* When hovering over a class block, apply a warm golden glow instead of blue. */
+.tt4 .slot:hover {
+  box-shadow:
+    0 0 12px rgba(255,211,77,0.25),
+    0 0 28px rgba(255,211,77,0.12),
+    0 4px 10px rgba(0,0,0,.28);
+  border-color: rgba(255,211,77,0.35);
+}

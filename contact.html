@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Purebred Muay Thai — Home</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="stylesheet" href="style.css">
+  <!-- Include hero video styles reused from the About page -->
+  <link rel="stylesheet" href="about-hero.css">
+<link rel="stylesheet" href="contact.css"></head>
+<body class="contact-page">
+<nav class="nav"><div class="container inner">
+  <a class="logo" href="index.html"><img src="assets/doglogo.png" alt="logo"/><span>Purebred Muay Thai</span></a>
+  <div class="links">
+    <a class="" href="index.html">Home</a>
+    <a class="" href="about.html">About</a>
+    <a class="" href="timetable.html">Timetable</a>
+    <a class="" href="events.html">Events</a>
+    <a class="active" href="contact.html">Contact</a>
+  </div>
+</div></nav>
+<section class="contact-hero">
+  <div class="inner">
+    <h1 style="font-size: clamp(38px, 5vw, 56px); font-weight:800; margin:0 0 6px;">Contact Us</h1>
+    <p style="opacity:.9; margin:0 0 18px; font-size:clamp(16px, 2.2vw, 18px)">Fastest: call <a href="tel:0246267073" style="color:#fff; text-decoration:underline;">02 4626 7073</a>. Or send us a message.</p>
+    <!--
+      Updated contact form
+
+      This form posts to formsubmit.co, a free service that forwards form submissions
+      to the specified email address.  When you receive the first submission from
+      this form you will be asked to confirm the email address.  After confirmation
+      subsequent submissions will be delivered to your inbox without any additional
+      configuration.
+
+      To change the recipient email address, edit the `action` attribute below
+      replacing `purebredmuaythaigym@gmail.com` with the desired address.  Do not remove
+      the leading `https://formsubmit.co/`.  You can also customise the subject
+      and autoresponse using the hidden `_subject` and `_autoresponse` fields.
+    -->
+    <form action="https://formsubmit.co/purebredmuaythaigym@gmail.com" method="POST" class="form-grid" autocomplete="on">
+      <!--
+        Formspree/formsubmit hidden inputs:
+        _subject sets the email subject line.
+        _template=table formats the message as a table for easier reading.
+        _captcha disables the built‑in captcha for a smoother user experience.
+        _autoresponse sends an automatic reply back to the sender (optional).
+      -->
+      <input type="hidden" name="_subject" value="New contact submission from Purebred Muay Thai">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_autoresponse" value="Thanks for contacting Purebred Muay Thai! We\'ll be in touch soon.">
+
+      <input name="name" placeholder="Name" required>
+      <input name="email" type="email" placeholder="Email" required>
+      <input name="phone" placeholder="Phone">
+      <select name="interest">
+        <option>Kids / Teens / Adults / PT</option>
+        <option>Mini Purebreds (4-7)</option>
+        <option>Juniors (8-12)</option>
+        <option>Teens (13-17)</option>
+        <option>Adults (18+)</option>
+        <option>1:1 PT</option>
+      </select>
+      <textarea name="msg" placeholder="Message"></textarea>
+      <div><button class="btn-primary" type="submit">Send</button></div>
+    </form>
+  </div>
+
+  <div class="visit">
+    <h2 style="margin:6px 10px 8px; font-size:clamp(24px, 3vw, 28px);">Visit</h2>
+    
+    
+<div class="map-wrap">
+  
+  <iframe 
+    class="purebred-map"
+    width="100%" 
+    height="350" 
+    loading="lazy" 
+    allowfullscreen 
+    referrerpolicy="no-referrer-when-downgrade" 
+    src="https://www.google.com/maps?q=Purebred+Muay+Thai+1%2F8+Samantha+Place+Smeaton+Grange+NSW&output=embed">
+  </iframe>
+
+  <div style="text-align:right; margin-top:8px;">
+    <a href="https://maps.app.goo.gl/QBPLCqaHPDmRauLf6" 
+       target="_blank" 
+       style="color:#ffd86b; text-decoration:none; font-weight:700;">
+      Open in Google Maps ↗
+    </a>
+  </div>
+</div>
+
+
+    <div class="addr">1/8 Samantha Place, Smeaton Grange NSW</div>
+  </div>
+</section>
+<footer class="footer"><div class="container inner">
+  <div><div class="notice">© Purebred Muay Thai</div></div>
+  <div class="notice">1/8 Samantha Place, Smeaton Grange • 02 4626 7073</div>
+</div></footer>
+</body>
+</html>

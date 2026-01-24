@@ -1,0 +1,745 @@
+
+:root{
+  --bg:#090a0b;
+  --ink:#eef1f7;
+  --muted:#a5acba;
+  --line:#1b1c22;
+  --accent:#ffd34d;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.container{width:min(1100px,90%);margin:0 auto}
+.nav{position:sticky;top:0;background:rgba(10,10,12,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:40}
+.nav .inner{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800}
+.logo img{width:34px;height:34px}
+.nav a{padding:8px 10px;border-radius:8px;opacity:.9}
+.nav a.active,.nav a:hover{background:#15161d;opacity:1}
+.hero{padding:76px 0 40px;display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:center}
+h1{font-size:44px;line-height:1.03;margin:0}
+.lead{color:var(--muted);font-size:18px;margin-top:12px}
+.cta{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+.btn{padding:12px 18px;border-radius:12px;border:1px solid var(--line);font-weight:700;background:#14151c}
+.btn.primary{background:var(--accent);color:#111}
+.btn.outline{background:transparent;border:1px solid var(--accent)}
+.section{padding:48px 0}
+.section h2{font-size:30px;margin:0 0 10px}
+.sub{color:var(--muted);max-width:68ch}
+.programs{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.program{padding:18px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,#12131a,#0d0e13)}
+.program h3{margin:0 0 6px;font-size:18px}
+.program p{color:var(--muted);font-size:14px;margin:0}
+.program .pill{display:inline-block;background:var(--accent);color:#111;padding:6px 10px;border-radius:999px;font-weight:800;margin-top:10px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.footer{border-top:1px solid var(--line);color:#aeb4c2}
+.footer .inner{display:flex;justify-content:space-between;gap:18px;padding:24px 0}
+.notice{color:var(--muted);font-size:12px}
+.list{display:grid;gap:6px}
+.list li{color:var(--muted)}
+.tablewrap{background:#11131a;border:1px solid var(--line);border-radius:16px;padding:14px}
+input,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:#0f1016;color:#fff}
+label{font-size:13px;color:var(--muted)}
+.form .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hero img{
+  max-width: 560px;
+  filter:
+    drop-shadow(0 0 95px rgba(255,255,255,0.55))
+    drop-shadow(0 0 55px rgba(255,255,255,0.45))
+    drop-shadow(0 12px 26px rgba(0,0,0,0.7)) !important;
+  transform: translateZ(0);
+  transition: filter .2s ease;
+}
+@media (max-width:1000px){
+  .hero{grid-template-columns:1fr}
+  .programs{grid-template-columns:1fr 1fr}
+  .split{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  .programs{grid-template-columns:1fr}
+}
+
+/* v7 clarity tweaks */
+.btn.outline{border-width:2px}
+
+
+
+/* ===== Depth upgrade v7.3 (white halo, stronger, forced) ===== */
+.hero{ position: relative; }
+.hero::before{ content:none; }
+
+.hero img{
+  max-width: 560px;
+  filter:
+    drop-shadow(0 0 95px rgba(255,255,255,0.55))
+    drop-shadow(0 0 55px rgba(255,255,255,0.45))
+    drop-shadow(0 12px 26px rgba(0,0,0,0.7)) !important;
+  transform: translateZ(0);
+  transition: filter .2s ease;
+}
+.hero img:hover{
+  filter:
+    drop-shadow(0 0 75px rgba(255,255,255,0.55))
+    drop-shadow(0 0 35px rgba(255,255,255,0.45))
+    drop-shadow(0 8px 20px rgba(0,0,0,0.65));
+}
+
+.logo img{
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.45));
+}
+
+
+/* === Purebred Muay Thai site-wide background (auto-injected) === */
+html, body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  min-height: 100vh;
+}
+/*
+ * The global background image overlay has been disabled by default. We only
+ * apply it on pages that explicitly opt in via a special body class.  For
+ * example, the timetable page sets class="timetable-page" on the <body>
+ * element, and the rules below will then show the background image with
+ * a dark overlay to allow the underlying content to remain readable.
+ */
+
+/* Default body background overlay: do nothing */
+body::before {
+  content: "";
+}
+
+/* Remove the default solid background colour when the timetable page is active
+   so that the custom background image overlay becomes visible. */
+body.timetable-page {
+  /* Override the solid page background so the image shows through */
+  background: transparent !important;
+}
+
+/* Timetable page background overlay */
+body.timetable-page::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Dark overlay (alpha 0.7) on top of the custom image to make the
+     background faint while keeping the timetable content readable */
+  background:
+    linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+    /* Use a local copy of the timetable background image to avoid
+       relative-path issues. The image is copied into the
+       muaythaisite/muaythaisite/assets directory. */
+    url("assets/timetableBG.png") center center / cover no-repeat;
+  z-index: -1;
+  pointer-events: none;
+}
+/* === End background injection === */
+
+/*
+ * Timetable-specific transparency overrides
+ *
+ * To ensure the timetable blocks remain semi‑transparent on the timetable
+ * page (allowing the faint background image to show through) while
+ * preserving the original design on other pages, we scope these rules
+ * under the `.timetable-page` body class.  Only the timetable page adds
+ * this class to its <body> element.
+ */
+
+body.timetable-page .tt4-grid .tt4-day,
+body.timetable-page .tt4-grid .tt4-cell,
+body.timetable-page .tt4-grid .tt4-cell:nth-child(odd) {
+  background: rgba(17, 19, 26, 0.7) !important;
+  backdrop-filter: blur(5px);
+}
+
+body.timetable-page .slot {
+  background: rgba(23, 24, 35, 0.7) !important;
+  backdrop-filter: blur(5px);
+}
+
+body.timetable-page .tt4-filters label {
+  background: rgba(16, 17, 24, 0.7) !important;
+  backdrop-filter: blur(5px);
+}
+
+/*
+ * Home hero logo overlay
+ *
+ * The home page reuses the about page’s video hero, but we overlay a small
+ * Purebred logo on top of the video.  The `.home-hero` class marks the
+ * adapted hero section, while `.hero-logo` positions the logo.  Sizes
+ * adjust responsively for smaller screens.
+ */
+.home-hero {
+  position: relative;
+}
+.home-hero .hero-logo {
+  /* When nested inside the content, simply size and space the logo */
+  max-width: 400px;
+  margin: 0 auto 28px;
+  opacity: 0.9;
+}
+@media (max-width: 768px) {
+  .home-hero .hero-logo {
+    max-width: 280px;
+    margin-bottom: 20px;
+  }
+}
+
+/* ---------------------------------------------------------
+ * Mobile adjustments for the home and timetable pages
+ *
+ * The desktop layouts looked good, but on smaller screens some
+ * elements felt cramped and overlapped.  The following
+ * media‑query tweaks target screens up to 768px wide.  They
+ * introduce breathing room around headings and CTAs on the
+ * home page, stack the call‑to‑action buttons with full‑width
+ * tap targets, shrink and wrap the navigation links so they
+ * don’t collide with the logo, lighten the hero overlay, and
+ * reflow the timetable into a readable vertical list with
+ * larger filter chips.  These rules are scoped under
+ * `@media (max-width: 768px)` so the desktop experience is
+ * preserved.
+ */
+@media (max-width: 768px) {
+  /* --- Navigation bar --- */
+  /* Allow the nav contents to wrap so the logo and links don’t overlap */
+  .nav .inner {
+    flex-wrap: wrap;
+  }
+  /* Ensure the links can wrap onto a new line with reduced padding */
+  .nav .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+  }
+  .nav a {
+    font-size: 14px;
+    padding: 6px 8px;
+  }
+
+  /* --- Hero section on the home page --- */
+  /* Add extra vertical padding so the heading and subheading aren’t cramped */
+  .hero {
+    padding: 64px 0 40px;
+  }
+  .hero h1 {
+    margin-bottom: 10px;
+  }
+  .hero .lead {
+    margin-bottom: 16px;
+  }
+  /* Stack CTA buttons vertically with full‑width tap targets */
+  .hero .cta {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .hero .cta .btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 16px 20px;
+    font-size: 16px;
+  }
+  /* Lighten the hero background overlay to reveal more of the video/image */
+  .hero {
+    position: relative;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* A subtle radial gradient similar to the about page to let the
+       underlying media show through while still darkening the edges */
+    background:
+      radial-gradient(75% 55% at 50% 40%, rgba(0,0,0,0.06), rgba(0,0,0,0.32)),
+      rgba(0,0,0,0.32);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  /* --- Timetable page adjustments --- */
+  /* Display the filter chips in two columns and enlarge the padding for easier tapping */
+  body.timetable-page .tt4-filters {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    justify-content: stretch;
+  }
+  body.timetable-page .tt4-filters label {
+    padding: 14px 18px;
+    font-size: 16px;
+    justify-content: center;
+  }
+  body.timetable-page .tt4-filters span {
+    line-height: 1.2;
+  }
+
+  /* Collapse the seven‑column timetable into a vertical list.  We hide the
+     standalone day header row and instead prepend each day name to its
+     respective schedule block using a ::before pseudo‑element. */
+  body.timetable-page .tt4-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  body.timetable-page .tt4-grid .tt4-day {
+    display: none;
+  }
+  body.timetable-page .tt4-grid .tt4-cell {
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px;
+    background: rgba(15,16,23,0.85);
+  }
+  body.timetable-page .tt4-grid .slot {
+    padding: 16px;
+  }
+  /* Add day labels before each cell for clarity */
+  body.timetable-page .tt4-grid .tt4-cell:nth-of-type(1)::before { content: "Monday"; }
+  body.timetable-page .tt4-grid .tt4-cell:nth-of-type(2)::before { content: "Tuesday"; }
+  body.timetable-page .tt4-grid .tt4-cell:nth-of-type(3)::before { content: "Wednesday"; }
+  body.timetable-page .tt4-grid .tt4-cell:nth-of-type(4)::before { content: "Thursday"; }
+  body.timetable-page .tt4-grid .tt4-cell:nth-of-type(5)::before { content: "Friday"; }
+  body.timetable-page .tt4-grid .tt4-cell:nth-of-type(6)::before { content: "Saturday"; }
+  body.timetable-page .tt4-grid .tt4-cell:nth-of-type(7)::before { content: "Sunday"; }
+  body.timetable-page .tt4-grid .tt4-cell::before {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 18px;
+    color: var(--accent);
+    text-align: center;
+  }
+
+  /*
+   * Fine‑tune the mobile navigation and typography.  Reduce the
+   * overall nav height, shrink the logo image and hide the logo text
+   * to save space.  Adjust the hero heading and lead font sizes to
+   * better fit smaller screens.
+   */
+  .nav .inner {
+    padding: 8px 0;
+  }
+  .logo img {
+    width: 28px;
+    height: 28px;
+  }
+  .logo span {
+    display: none;
+  }
+  .hero h1 {
+    font-size: 32px;
+  }
+  .hero .lead {
+    font-size: 16px;
+  }
+
+  /*
+   * Make the timetable easier to scan by reducing heading size and
+   * compressing the slot cards so multiple entries fit in the
+   * viewport.  Day labels are aligned left and slightly smaller.
+   */
+  body.timetable-page .tt4-head h1 {
+    font-size: 28px;
+  }
+  body.timetable-page .tt4-head .sub {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  body.timetable-page .tt4-grid .tt4-cell {
+    padding: 12px;
+  }
+  body.timetable-page .tt4-grid .slot {
+    padding: 10px;
+    border-radius: 10px;
+  }
+  body.timetable-page .slot .time {
+    font-size: 12px;
+  }
+  body.timetable-page .slot .name {
+    font-size: 14px;
+  }
+  body.timetable-page .tt4-grid .tt4-cell {
+    gap: 10px;
+  }
+  body.timetable-page .tt4-grid .tt4-cell::before {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    text-align: left;
+    padding-left: 4px;
+  }
+
+  /*
+   * Revert timetable to a horizontally scrollable seven‑column grid on
+   * phones.  Showing all days side‑by‑side with horizontal scroll
+   * preserves the original structure and ensures the schedule is
+   * accessible.  Each column has a minimum width so content isn’t
+   * cramped, and we restore the day headers and remove the injected
+   * pseudo‑labels.
+   */
+  body.timetable-page .tt4-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(260px, 1fr));
+    overflow-x: auto;
+    width: 100%;
+    gap: 0;
+  }
+  body.timetable-page .tt4-grid .tt4-day,
+  body.timetable-page .tt4-grid .tt4-cell {
+    min-width: 260px;
+  }
+  body.timetable-page .tt4-grid .tt4-day {
+    /* Redisplay the day headers on mobile */
+    display: block;
+  }
+  body.timetable-page .tt4-grid .tt4-cell::before {
+    content: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  /*
+   * Vertical day‑by‑day timetable layout on small screens.  Each day
+   * heading appears above its corresponding schedule block.  We use
+   * CSS grid with a single column and explicitly assign rows so that
+   * the day names and their schedules appear in order.  This removes
+   * the need for horizontal scrolling and makes the timetable
+   * intuitive on phones.
+   */
+  body.timetable-page .tt4-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    overflow-x: hidden;
+  }
+  body.timetable-page .tt4-grid .tt4-day {
+    display: block;
+    font-size: 20px;
+    font-weight: 900;
+    margin-bottom: 8px;
+    color: var(--accent);
+    text-align: left;
+  }
+  body.timetable-page .tt4-grid .tt4-cell {
+    margin-bottom: 28px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px;
+    background: rgba(15,16,23,0.85);
+  }
+  /* Assign alternating rows to each day name and its schedule */
+  body.timetable-page .tt4-grid .tt4-day:nth-of-type(1) { grid-row: 1; }
+  body.timetable-page .tt4-grid .tt4-cell:nth-of-type(1) { grid-row: 2; }
+  body.timetable-page .tt4-grid .tt4-day:nth-of-type(2) { grid-row: 3; }
+  body.timetable-page .tt4-grid .tt4-cell:nth-of-type(2) { grid-row: 4; }
+  body.timetable-page .tt4-grid .tt4-day:nth-of-type(3) { grid-row: 5; }
+  body.timetable-page .tt4-grid .tt4-cell:nth-of-type(3) { grid-row: 6; }
+  body.timetable-page .tt4-grid .tt4-day:nth-of-type(4) { grid-row: 7; }
+  body.timetable-page .tt4-grid .tt4-cell:nth-of-type(4) { grid-row: 8; }
+  body.timetable-page .tt4-grid .tt4-day:nth-of-type(5) { grid-row: 9; }
+  body.timetable-page .tt4-grid .tt4-cell:nth-of-type(5) { grid-row: 10; }
+  body.timetable-page .tt4-grid .tt4-day:nth-of-type(6) { grid-row: 11; }
+  body.timetable-page .tt4-grid .tt4-cell:nth-of-type(6) { grid-row: 12; }
+  body.timetable-page .tt4-grid .tt4-day:nth-of-type(7) { grid-row: 13; }
+  body.timetable-page .tt4-grid .tt4-cell:nth-of-type(7) { grid-row: 14; }
+
+  /* Mobile day tab bar for timetable */
+  body.timetable-page .tt-mobile-tabs {
+    display: flex;
+    justify-content: space-between;
+    gap: 4px;
+    margin: 16px 0;
+  }
+  body.timetable-page .tt-mobile-tab {
+    flex: 1;
+    padding: 10px 0;
+    font-weight: 700;
+    font-size: 16px;
+    background: #11131a;
+    color: var(--accent);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    text-align: center;
+  }
+  body.timetable-page .tt-mobile-tab.active {
+    background: var(--accent);
+    color: #111;
+  }
+}
+
+
+
+/* Larger navbar logo on the HOME page only (double size) */
+.home-page .logo img{
+  width:68px;
+  height:68px;
+}
+
+
+/* Full day label between tabs and classes */
+body.timetable-page .tt-selected-day{
+  text-align:center;
+  font-size:22px;
+  font-weight:800;
+  letter-spacing:0.3px;
+  margin: 8px 0 14px;
+  color: var(--ink);
+  text-shadow: 0 0 8px rgba(180,205,255,0.25);
+}
+
+
+/* === HOME HERO ALIGNMENT — Match About page on mobile === */
+@media (max-width: 768px){
+  /* Keep full-height hero and centered baseline like About */
+  .home-page .about-hero{ 
+    min-height: 100vh; 
+    place-items: center; 
+  }
+  /* Float the big logo so it doesn't push the text down */
+  .home-hero .hero-logo{
+    position: absolute !important;
+    top: 6vh;                /* raise logo a touch */
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    max-width: 240px;
+    z-index: 3;
+    pointer-events: none;
+  }
+  /* Pull the text + buttons block up so it loads like About */
+  .home-hero .about-hero__content{
+    margin-top: -14vh !important;
+  }
+}
+@media (min-width: 769px){
+  /* Keep desktop balanced; small lift only */
+  .home-hero .about-hero__content{ 
+    margin-top: -6vh; 
+  }
+}
+
+
+/* === HOME HERO: put logo in its own row above text on mobile (no overlap) === */
+@media (max-width: 768px){
+  .home-page .about-hero{
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+  }
+  .home-hero{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+  .home-hero .hero-logo{
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    max-width: 260px; /* same size you liked */
+    margin: 12px auto 10px; /* small gap above heading */
+    z-index: 1;
+  }
+  .home-hero .about-hero__content{
+    margin-top: 0 !important; /* no negative shift; sits right under logo */
+  }
+}
+
+
+/* === HOME HERO balance: keep logo in its own row AND raise text/buttons === */
+@media (max-width: 768px){
+  .home-hero{ 
+    display:flex; flex-direction:column; justify-content:center; align-items:center;
+  }
+  .home-hero .hero-logo{
+    position: static !important;
+    margin: 8px auto 6px !important; /* small gap above heading */
+    max-width: 260px;
+  }
+  .home-hero .about-hero__content{
+    margin-top: -8vh !important;  /* pull text/buttons up without absoluting logo */
+  }
+}
+@media (min-width: 769px){
+  .home-hero .about-hero__content{ margin-top: -4vh !important; }
+}
+
+
+/* === Google Reviews styles (dark) === */
+.reviews-section{ margin:48px auto; max-width:1100px; }
+.reviews-title{ font-size:28px; font-weight:800; margin:0 0 16px 0; }
+.reviews-list{ display:grid; gap:14px; }
+.review-card{
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius:18px; padding:16px 18px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.28);
+}
+.review-head{ display:flex; gap:12px; align-items:center; margin-bottom:8px; }
+.review-head img{ width:40px; height:40px; border-radius:50%; }
+.stars{ font-size:14px; letter-spacing:0.5px; }
+.stars .dim{ opacity:0.25; }
+.review-text{ line-height:1.55; }
+.reviews-empty{ opacity:0.7; }
+@media (min-width:820px){ .reviews-list{ grid-template-columns:1fr 1fr; } }
+
+
+/* Programs grid */
+.programs-cta{ margin:40px auto 60px; }
+.programs-cta .programs-title{ font-size: clamp(24px,3vw,28px); margin: 0 0 12px; }
+/* Centre the programs and allow wrapping for any number of items */
+.programs-grid{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:16px;
+}
+.program-card{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  /* Provide a consistent width for each card so longer labels don't stretch individual boxes */
+  flex: 1 1 160px;
+  padding:20px 18px;
+  border-radius:18px;
+  background: rgba(0,0,0,.28);
+  border:1px solid rgba(255,255,255,.12);
+  color:#fff;
+  cursor:pointer;
+  backdrop-filter: blur(5px);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.program-card .icon{ opacity:.95; margin-bottom:10px; }
+.program-card .label{ font-weight:700; }
+.program-card:hover{ transform: translateY(-2px); border-color: rgba(255,216,107,.6); box-shadow: 0 8px 30px rgba(0,0,0,.35); }
+
+@media (max-width: 900px){
+  /* Keep centred layout on medium screens */
+  .programs-grid{
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+}
+@media (max-width: 520px){
+  /* On small screens, keep three square cards side by side */
+  .programs-grid{
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  .program-card{
+    flex: 0 1 calc(33.333% - 16px);
+    max-width: 130px;
+    min-width: 90px;
+    aspect-ratio: 1 / 1;
+  }
+}
+}
+
+/* Modal */
+.program-modal[hidden]{ display:none; }
+.no-scroll{ overflow:hidden; }
+.program-modal .pm-backdrop{
+  position:fixed; inset:0; background:rgba(0,0,0,.55); backdrop-filter: blur(3px); z-index:1000;
+}
+.program-modal .pm-card{
+  position:fixed; left:50%; top:50%; transform: translate(-50%, -50%);
+  width: min(560px, 92vw);
+  background: rgba(14,14,14,.9); color:#fff; border:1px solid rgba(255,255,255,.18);
+  border-radius:20px; padding:18px 18px 20px; z-index:1001;
+  box-shadow: 0 20px 50px rgba(0,0,0,.5);
+}
+.pm-title{ margin:6px 6px 4px; font-size: clamp(20px, 2.4vw, 24px); }
+.pm-desc{ margin:0 6px 14px; color:#d4d7dd; }
+.pm-cta{ display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:999px; padding:12px 18px; text-decoration:none; font-weight:800; }
+.pm-close{
+  position:absolute; top:8px; right:10px; width:36px; height:36px; border-radius:50%;
+  border:1px solid rgba(255,255,255,.2); background:rgba(0,0,0,.4); color:#fff; cursor:pointer; font-size:20px;
+}
+.btn.btn-yellow{ background:#ffd86b; color:#111; border:none; }
+
+
+/* Glass card wrapper for Programs on the hero/video */
+.programs-cta-card{
+  max-width: 1024px;
+  margin: 12px auto 0;
+  background: rgba(0,0,0,.28);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 20px;
+  backdrop-filter: blur(6px);
+  padding: 14px 16px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.35);
+}
+/* Slightly pull the section upward toward reviews if needed */
+.programs-cta{
+  position: relative;
+  z-index: 3;
+  margin-top: 8px;
+}
+
+/* === Custom hero overlay for programs === */
+.about-hero .programs-cta{
+  /* Position within the hero content */
+  width: 100%;
+  max-width: 960px;
+  margin-top: clamp(24px, 4vh, 40px);
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.about-hero .programs-title{
+  color: #fff;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.about-hero .program-card{
+  /* Use a frosted glass style similar to review stickers */
+  background: rgba(0,0,0,.4);
+  border: 1px solid rgba(255,255,255,.18);
+  backdrop-filter: blur(6px);
+}
+
+/*
+ * Center the reviewer name, star rating and relative time in desktop/mobile
+ * review cards loaded via reviews.js.  The author and meta (time) blocks,
+ * along with the stars row, should span the full width of the card and
+ * be horizontally centered.  This patch only targets review-card
+ * elements and does not affect other uses of `.stars`.
+ */
+.review-card .author,
+.review-card .meta{
+  display:block;
+  width:100%;
+  text-align:center;
+}
+.review-card .stars{
+  display:block;
+  width:100%;
+  text-align:center;
+}
+
+/* Display the author’s avatar next to their name on review cards */
+.review-card .author img{
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 6px;
+  vertical-align: middle;
+}
