@@ -1,0 +1,34 @@
+{
+  "reviews": [
+    {
+      "rating": 5,
+      "author": "Zac G.",
+      "relative_time_description": "This week",
+      "text": "Coaches are elite and the vibe is unreal. Best Muay Thai gym in the area."
+    },
+    {
+      "rating": 5,
+      "author": "Elena P.",
+      "relative_time_description": "2 weeks ago",
+      "text": "Super welcoming for beginners. Great kids classes too!"
+    },
+    {
+      "rating": 5,
+      "author": "Jorge M.",
+      "relative_time_description": "Last month",
+      "text": "Technical coaching and proper fight culture. Facilities are spotless."
+    },
+    {
+      "rating": 5,
+      "author": "Ali K.",
+      "relative_time_description": "4 months ago",
+      "text": "Community-first gym. Trainers push you but always safe and respectful."
+    },
+    {
+      "rating": 4,
+      "author": "Sam R.",
+      "relative_time_description": "3 months ago",
+      "text": "Sessions are tough but fun. Improved fast in just a few weeks."
+    }
+  ]
+}

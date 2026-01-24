@@ -1,0 +1,19 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "assets/events"
+public_folder: "/assets/events"
+
+collections:
+  - name: "settings"
+    label: "Events"
+    files:
+      - file: "data/event.json"
+        label: "Current Event"
+        name: "current_event"
+        fields:
+          - { label: "Show event", name: "show", widget: "boolean", default: false }
+          - { label: "Event title", name: "title", widget: "string" }
+          - { label: "Description", name: "description", widget: "text" }
+          - { label: "Poster image (A4)", name: "poster", widget: "image", required: false }
