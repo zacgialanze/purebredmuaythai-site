@@ -1,0 +1,5 @@
+/  /index.html  200
+
+/#confirmation_token=*  /auth.html  200
+/#recovery_token=*      /auth.html  200
+/#invite_token=*        /auth.html  200
