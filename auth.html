@@ -7,34 +7,76 @@
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <style>
     body{font-family:Arial,Helvetica,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;background:#111;color:#fff;}
-    .box{max-width:520px;padding:22px;border:1px solid rgba(255,255,255,.2);border-radius:14px;background:rgba(0,0,0,.4)}
+    .box{max-width:560px;padding:22px;border:1px solid rgba(255,255,255,.2);border-radius:14px;background:rgba(0,0,0,.4)}
     a{color:#7dd3fc}
+    code{background:rgba(255,255,255,.08);padding:2px 6px;border-radius:6px}
   </style>
 </head>
 <body>
   <div class="box">
-    <h2>Loading secure sign-in…</h2>
-    <p>If nothing pops up in 3 seconds, click:
-      <a href="#" id="open">Open login</a>
-    </p>
+    <h2>Finishing sign-in…</h2>
+    <p>If nothing pops up, click <a href="#" id="open">Open login</a></p>
+    <p style="opacity:.75;font-size:14px">Tip: if a link dumps you on the homepage with <code>#invite_token</code> / <code>#recovery_token</code>, copy the full URL and paste it into this page.</p>
   </div>
 
   <script>
-    // Open the Netlify Identity modal and then send you to /admin
-    function openModal(){
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("login", () => window.location.replace("/admin/"));
-        window.netlifyIdentity.on("signup", () => window.location.replace("/admin/"));
-        window.netlifyIdentity.init();
-        window.netlifyIdentity.open();
-      }
+    // 1) Read tokens from the URL hash on THIS page (e.g. #invite_token=XXX)
+    function getHashParams() {
+      const hash = window.location.hash || "";
+      const out = {};
+      hash.replace(/^#/, "").split("&").forEach(part => {
+        if (!part) return;
+        const [k, v] = part.split("=");
+        out[decodeURIComponent(k)] = decodeURIComponent(v || "");
+      });
+      return out;
     }
+
+    function goAdmin() {
+      window.location.replace("/admin/");
+    }
+
+    function startIdentity() {
+      if (!window.netlifyIdentity) return;
+
+      // Always init once
+      window.netlifyIdentity.init();
+
+      // When logged in, go to /admin
+      window.netlifyIdentity.on("login", goAdmin);
+
+      const params = getHashParams();
+
+      // 2) If we have an invite token, accept it and set password inside the modal
+      if (params.invite_token) {
+        // This opens the modal in "signup / invite" context
+        window.netlifyIdentity.open("signup");
+        return;
+      }
+
+      // 3) If we have a recovery token, open the recovery flow in the modal
+      if (params.recovery_token) {
+        window.netlifyIdentity.open("recovery");
+        return;
+      }
+
+      // 4) If we have a confirmation token, open login (user can then set password/reset if needed)
+      if (params.confirmation_token) {
+        window.netlifyIdentity.open("login");
+        return;
+      }
+
+      // Default: open login
+      window.netlifyIdentity.open("login");
+    }
+
     document.getElementById("open").addEventListener("click", function(e){
       e.preventDefault();
-      openModal();
+      startIdentity();
     });
-    // auto-open
-    setTimeout(openModal, 300);
+
+    // auto-run
+    setTimeout(startIdentity, 200);
   </script>
 </body>
 </html>
