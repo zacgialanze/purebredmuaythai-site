@@ -1,32 +1,59 @@
 const $=s=>document.querySelector(s);
-let token=sessionStorage.getItem("purebred_admin_token")||"";
+// Keep login usable when a browser blocks session storage.
+let token="";
+try{token=sessionStorage.getItem("purebred_admin_token")||""}catch{}
+function rememberToken(value){
+  token=value;
+  try{if(value)sessionStorage.setItem("purebred_admin_token",value);else sessionStorage.removeItem("purebred_admin_token")}catch{}
+}
+async function request(path,options={}){
+  const controller=new AbortController();
+  const timeout=setTimeout(()=>controller.abort(),20000);
+  try{
+    const r=await fetch(path,{...options,signal:controller.signal});
+    const d=await r.json().catch(()=>{throw new Error("The server returned an unexpected response. Please try again.")});
+    if(!r.ok)throw new Error(d.error||"Request failed. Please try again.");
+    return d;
+  }catch(err){
+    if(err.name==="AbortError")throw new Error("The connection timed out. Please try again.");
+    throw err;
+  }finally{clearTimeout(timeout)}
+}
 let timetable={days:[]},events={events:[]};
 const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
 function status(m,ok=true){const e=$("#status");e.textContent=m;e.className="status show "+(ok?"ok":"bad");setTimeout(()=>e.classList.remove("show"),3500)}
 async function api(path,body){
-  const r=await fetch(path,{method:"POST",headers:{"content-type":"application/json",...(token?{authorization:"Bearer "+token}:{})},body:JSON.stringify(body)});
-  const d=await r.json().catch(()=>({}));
-  if(!r.ok) throw new Error(d.error||"Request failed");
-  return d;
+  return request(path,{method:"POST",headers:{"content-type":"application/json",...(token?{authorization:"Bearer "+token}:{})},body:JSON.stringify(body)});
 }
 async function login(e){
   e.preventDefault();
+  const button=$("#loginForm button");
+  if(button.disabled)return;
+  button.disabled=true;button.textContent="Signing in…";
+  $("#loginMsg").textContent="Checking your login…";
   try{
-    const d=await api("/.netlify/functions/admin-auth",{username:$("#username").value,password:$("#password").value});
-    token=d.token;sessionStorage.setItem("purebred_admin_token",token);await start();
+    const d=await api("/.netlify/functions/admin-auth",{username:$("#username").value.trim(),password:$("#password").value});
+    if(!d.token)throw new Error("Sign-in did not complete. Please try again.");
+    rememberToken(d.token);
+    $("#loginMsg").textContent="Signed in. Loading dashboard…";
+    await start();
+    $("#password").value="";
+    $("#loginMsg").textContent="";
   }catch(err){$("#loginMsg").textContent=err.message}
+  finally{button.disabled=false;button.textContent="Log in"}
 }
 async function start(){
-  try{
-    const pair=await Promise.all([
-      fetch("/.netlify/functions/public-data?type=timetable&"+Date.now()).then(r=>r.json()),
-      fetch("/.netlify/functions/public-data?type=events&"+Date.now()).then(r=>r.json())
-    ]);
-    timetable=pair[0];events=pair[1];
-    $("#loginView").hidden=true;$("#dashboard").hidden=false;
-    renderTimetable();renderEvents();
-  }catch(err){status(err.message,false)}
+  const pair=await Promise.all([
+    request("/.netlify/functions/public-data?type=timetable&"+Date.now()),
+    request("/.netlify/functions/public-data?type=events&"+Date.now())
+  ]);
+  if(!Array.isArray(pair[0]?.days)||!Array.isArray(pair[1]?.events)){
+    throw new Error("Dashboard data could not be loaded. Please try again.");
+  }
+  timetable=pair[0];events=pair[1];
+  renderTimetable();renderEvents();
+  $("#loginView").hidden=true;$("#dashboard").hidden=false;
 }
 function classRow(c,ci){
   return '<div class="class-row" data-class="'+ci+'">'+
@@ -102,9 +129,11 @@ function bindEvents(){
   document.querySelectorAll(".e-file").forEach(i=>i.onchange=()=>upload(i,i.closest(".event-edit").querySelector(".e-poster")).catch(e=>status(e.message,false)));
 }
 $("#loginForm").addEventListener("submit",login);
-$("#logoutBtn").onclick=()=>{sessionStorage.removeItem("purebred_admin_token");location.reload()};
+$("#logoutBtn").onclick=()=>{rememberToken("");location.reload()};
 $("#addEvent").onclick=()=>{readEvents();events.events.push({id:uid(),title:"",date:"",description:"",poster:"",show:true});renderEvents()};
 $("#saveTimetable").onclick=async()=>{readTimetable();try{status("Saving timetable…");await api("/.netlify/functions/admin-save",{action:"save-timetable",data:timetable});status("Timetable saved.")}catch(e){status(e.message,false)}};
 $("#saveEvents").onclick=async()=>{readEvents();try{status("Saving events…");await api("/.netlify/functions/admin-save",{action:"save-events",data:events});status("Events saved.")}catch(e){status(e.message,false)}};
 document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x===b));$("#timetablePanel").hidden=b.dataset.tab!=="timetable";$("#eventsPanel").hidden=b.dataset.tab!=="events"});
-if(token)start();
+$("#loginForm button").disabled=false;
+$("#loginMsg").textContent="";
+if(token)start().catch(err=>{$("#loginMsg").textContent=err.message});
