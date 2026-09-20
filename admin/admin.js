@@ -20,8 +20,8 @@ async function login(e){
 async function start(){
   try{
     const pair=await Promise.all([
-      fetch("../data/timetable.json?"+Date.now()).then(r=>r.json()),
-      fetch("../data/events.json?"+Date.now()).then(r=>r.json())
+      fetch("/.netlify/functions/public-data?type=timetable&"+Date.now()).then(r=>r.json()),
+      fetch("/.netlify/functions/public-data?type=events&"+Date.now()).then(r=>r.json())
     ]);
     timetable=pair[0];events=pair[1];
     $("#loginView").hidden=true;$("#dashboard").hidden=false;
@@ -73,7 +73,7 @@ function eventCard(e,i){
     '<div class="event-grid"><label>Event name<input class="e-title" value="'+esc(e.title)+'"></label><label>Date<input class="e-date" type="date" value="'+esc(e.date)+'"></label></div>'+
     '<label>Information<textarea class="e-desc">'+esc(e.description)+'</textarea></label>'+
     '<label>Poster image<input class="e-file" type="file" accept="image/jpeg,image/png,image/webp"></label>'+
-    (e.poster?'<img class="event-preview" src="..'+esc(e.poster)+'" alt=""><div class="small">'+esc(e.poster)+'</div>':'')+
+    (e.poster?'<img class="event-preview" src="'+esc(e.poster)+'" alt=""><div class="small">'+esc(e.poster)+'</div>':'')+
     '<label class="check"><input class="e-show" type="checkbox"'+(e.show!==false?' checked':'')+'> Show this event on the website</label>'+
     '<input class="e-poster" type="hidden" value="'+esc(e.poster||"")+'"></div>';
 }
@@ -104,7 +104,7 @@ function bindEvents(){
 $("#loginForm").addEventListener("submit",login);
 $("#logoutBtn").onclick=()=>{sessionStorage.removeItem("purebred_admin_token");location.reload()};
 $("#addEvent").onclick=()=>{readEvents();events.events.push({id:uid(),title:"",date:"",description:"",poster:"",show:true});renderEvents()};
-$("#saveTimetable").onclick=async()=>{readTimetable();try{status("Saving timetable…");await api("/.netlify/functions/admin-save",{action:"save-timetable",data:timetable});status("Timetable saved. Netlify will publish it shortly.")}catch(e){status(e.message,false)}};
-$("#saveEvents").onclick=async()=>{readEvents();try{status("Saving events…");await api("/.netlify/functions/admin-save",{action:"save-events",data:events});status("Events saved. Netlify will publish them shortly.")}catch(e){status(e.message,false)}};
+$("#saveTimetable").onclick=async()=>{readTimetable();try{status("Saving timetable…");await api("/.netlify/functions/admin-save",{action:"save-timetable",data:timetable});status("Timetable saved.")}catch(e){status(e.message,false)}};
+$("#saveEvents").onclick=async()=>{readEvents();try{status("Saving events…");await api("/.netlify/functions/admin-save",{action:"save-events",data:events});status("Events saved.")}catch(e){status(e.message,false)}};
 document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x===b));$("#timetablePanel").hidden=b.dataset.tab!=="timetable";$("#eventsPanel").hidden=b.dataset.tab!=="events"});
 if(token)start();
