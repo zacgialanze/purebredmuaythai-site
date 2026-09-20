@@ -1,15 +1,15 @@
 const crypto=require("crypto");
 const json=(status,body)=>({statusCode:status,headers:{"content-type":"application/json","cache-control":"no-store"},body:JSON.stringify(body)});
 function key(){
-  const u=process.env.ADMIN_USERNAME||"", p=process.env.ADMIN_PASSWORD||"";
+  const u="Adam", p=process.env.ADMIN_PASSWORD||"";
   return crypto.createHash("sha256").update("purebred-admin-v1:"+u+":"+p).digest();
 }
 function b64(s){return Buffer.from(s).toString("base64url")}
 function sign(payload){return crypto.createHmac("sha256",key()).update(payload).digest("base64url")}
 exports.handler=async(event)=>{
   if(event.httpMethod!=="POST") return json(405,{error:"Method not allowed"});
-  const expectedPass=process.env.ADMIN_PASSWORD, expectedUser=process.env.ADMIN_USERNAME;
-  if(!expectedPass||!expectedUser) return json(500,{error:"Admin username/password are not configured"});
+  const expectedPass=process.env.ADMIN_PASSWORD, expectedUser="Adam";
+  if(!expectedPass) return json(500,{error:"Admin password is not configured"});
   let body={}; try{body=JSON.parse(event.body||"{}")}catch{}
   const user=String(body.username||""), pass=String(body.password||"");
   const userOk=user===expectedUser;
