@@ -1,12 +1,24 @@
 <!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Purebred Admin</title>
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  </head>
-  <body>
-    <script src="https://unpkg.com/netlify-cms@^2.10.192/dist/netlify-cms.js"></script>
-  </body>
-</html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Purebred Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="admin.css">
+</head><body>
+<main class="admin-shell">
+<section id="loginView" class="panel login-panel">
+<img src="../assets/doglogo.png" class="admin-logo" alt="">
+<h1>Purebred Admin</h1><p>Coach login</p>
+<form id="loginForm">
+<label>Username<input id="username" autocomplete="username" required></label>
+<label>Password<input id="password" type="password" autocomplete="current-password" required></label>
+<button class="primary" type="submit">Log in</button><div id="loginMsg" class="msg"></div>
+</form></section>
+<section id="dashboard" hidden>
+<header class="topbar"><div><h1>Purebred Admin</h1><p>Timetable & events manager</p></div><div class="top-actions"><a href="../index.html">View website</a><button id="logoutBtn" class="ghost">Log out</button></div></header>
+<nav class="tabs"><button class="tab active" data-tab="timetable">Timetable</button><button class="tab" data-tab="events">Events</button></nav>
+<section id="timetablePanel" class="panel tab-panel"><div class="section-head"><div><h2>Timetable</h2><p>Edit classes for each day, then save.</p></div><button id="saveTimetable" class="primary">Save timetable</button></div><div id="timetableEditor"></div></section>
+<section id="eventsPanel" class="panel tab-panel" hidden><div class="section-head"><div><h2>Events</h2><p>Create, edit, hide or delete events.</p></div><button id="addEvent" class="primary">+ Add event</button></div><div id="eventsEditor"></div><div class="save-row"><button id="saveEvents" class="primary">Save events</button></div></section>
+<div id="status" class="status"></div>
+</section></main><script src="admin.js"></script></body></html>

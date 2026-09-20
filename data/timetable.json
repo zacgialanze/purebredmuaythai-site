@@ -1,0 +1,159 @@
+{
+  "days": [
+    {
+      "day": "Monday",
+      "classes": [
+        {
+          "time": "5:30pm – 6:30pm",
+          "name": "Intermediate / Advanced",
+          "category": "advanced"
+        },
+        {
+          "time": "6:30pm – 7:30pm",
+          "name": "Advanced / Intermediate Sparring/Clinch",
+          "category": "advanced"
+        },
+        {
+          "time": "6:30pm – 7:30pm",
+          "name": "Beginners",
+          "category": "beginners"
+        },
+        {
+          "time": "7:30pm",
+          "name": "Beginners Sparring",
+          "category": "beginners"
+        },
+        {
+          "time": "7:30pm – 8:15pm",
+          "name": "Beginners",
+          "category": "beginners"
+        }
+      ]
+    },
+    {
+      "day": "Tuesday",
+      "classes": [
+        {
+          "time": "4:15pm",
+          "name": "Mini Purebreds 4–7 yo",
+          "category": "kids"
+        },
+        {
+          "time": "4:45pm",
+          "name": "Junior Purebreds 8–12 yo",
+          "category": "juniors"
+        },
+        {
+          "time": "5:30pm – 6:30pm",
+          "name": "Intermediate / Advanced",
+          "category": "advanced"
+        },
+        {
+          "time": "6:30pm – 7:30pm",
+          "name": "Beginners",
+          "category": "beginners"
+        },
+        {
+          "time": "6:30pm – 7:00pm",
+          "name": "Intermediate / Advanced Sparring/Clinch",
+          "category": "advanced"
+        },
+        {
+          "time": "7:30pm – 8:15pm",
+          "name": "Beginners",
+          "category": "beginners"
+        }
+      ]
+    },
+    {
+      "day": "Wednesday",
+      "classes": [
+        {
+          "time": "4:45pm – 5:30pm",
+          "name": "Junior Purebreds 8–12 yo",
+          "category": "juniors"
+        },
+        {
+          "time": "5:30pm – 6:30pm",
+          "name": "Intermediate / Advanced",
+          "category": "advanced"
+        },
+        {
+          "time": "6:30pm – 7:00pm",
+          "name": "Intermediate / Advanced Sparring/Clinch",
+          "category": "advanced"
+        },
+        {
+          "time": "6:30pm – 7:30pm",
+          "name": "Beginners",
+          "category": "beginners"
+        }
+      ]
+    },
+    {
+      "day": "Thursday",
+      "classes": [
+        {
+          "time": "4:15pm",
+          "name": "Mini Purebreds 4–7 yo",
+          "category": "kids"
+        },
+        {
+          "time": "4:45pm",
+          "name": "Junior Purebreds 8–12 yo",
+          "category": "juniors"
+        },
+        {
+          "time": "5:30pm – 6:30pm",
+          "name": "Intermediate / Advanced",
+          "category": "advanced"
+        },
+        {
+          "time": "6:30pm – 7:30pm",
+          "name": "Beginners",
+          "category": "beginners"
+        },
+        {
+          "time": "7:30pm",
+          "name": "Beginners Sparring",
+          "category": "beginners"
+        }
+      ]
+    },
+    {
+      "day": "Friday",
+      "classes": [
+        {
+          "time": "5:30pm – 7:00pm",
+          "name": "All Levels",
+          "category": "all"
+        }
+      ]
+    },
+    {
+      "day": "Saturday",
+      "classes": [
+        {
+          "time": "8:15am – 9:00am",
+          "name": "Junior Purebreds 8–12 yo",
+          "category": "juniors"
+        },
+        {
+          "time": "9:00am – 10:00am",
+          "name": "All Levels",
+          "category": "all"
+        }
+      ]
+    },
+    {
+      "day": "Sunday",
+      "classes": [
+        {
+          "time": "",
+          "name": "CLOSED",
+          "category": "all"
+        }
+      ]
+    }
+  ]
+}

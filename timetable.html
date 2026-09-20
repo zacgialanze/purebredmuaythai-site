@@ -4,127 +4,25 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="stylesheet" href="style.css">
-    <!-- Timetable-specific styles -->
-    <link rel="stylesheet" href="tt4.css">
+<link rel="stylesheet" href="tt4.css">
 </head><body class="timetable-page">
 <nav class="nav"><div class="container inner">
-  <a class="logo" href="index.html"><img src="assets/doglogo.png" alt="logo"/><span>Purebred Muay Thai</span></a>
-  <div class="links">
-    <a class="" href="index.html">Home</a>
-    <a class="" href="about.html">About</a>
-    <a class="active" href="timetable.html">Timetable</a>
-    <a class="" href="events.html">Events</a>
-    <a class="" href="contact.html">Contact</a>
-  </div>
-</div></nav>
+<a class="logo" href="index.html"><img src="assets/doglogo.png" alt="logo"/><span>Purebred Muay Thai</span></a>
+<div class="links">
+<a href="index.html">Home</a><a href="about.html">About</a><a class="active" href="timetable.html">Timetable</a><a href="events.html">Events</a><a href="contact.html">Contact</a>
+</div></div></nav>
 <div class="container">
-  <!-- Begin interactive timetable copied from BADBUTGOODTIMETABLE -->
-  <section class="tt4">
-    <header class="tt4-head">
-      <h1>Class Timetable</h1>
-      <p class="sub">Weekly schedule</p>
-    </header>
-
-    <div class="tt4-filters">
-      <label><input type="checkbox" class="tt4-filter" data-key="kids" checked><span>Kids (4–7)</span></label>
-      <label><input type="checkbox" class="tt4-filter" data-key="juniors" checked><span>Juniors (8–12)</span></label>
-      <label><input type="checkbox" class="tt4-filter" data-key="beginners" checked><span>Beginners (incl. sparring/clinch)</span></label>
-      <label><input type="checkbox" class="tt4-filter" data-key="advanced" checked><span>Advanced (incl. sparring/clinch)</span></label>
-    </div>
-
-    <div class="tt4-grid">
-      <div class="tt4-day">Monday</div>
-      <div class="tt4-day">Tuesday</div>
-      <div class="tt4-day">Wednesday</div>
-      <div class="tt4-day">Thursday</div>
-      <div class="tt4-day">Friday</div>
-      <div class="tt4-day">Saturday</div>
-      <div class="tt4-day">Sunday</div>
-
-      <!-- Monday -->
-      <div class="tt4-cell">
-        <div class="slot" data-keys="advanced"><div class="time">5:30pm – 6:30pm</div><div class="name">Intermediate<br/>Advanced</div></div>
-        <div class="slot" data-keys="advanced"><div class="time">6:30pm – 7:30pm</div><div class="name">Advanced / Intermediate<br/>Sparring/Clinch</div></div>
-        <div class="slot" data-keys="beginners"><div class="time">6:30pm – 7:30pm</div><div class="name">Beginners</div></div>
-              <div class="slot" data-keys="beginners"><div class="time">7:30pm</div><div class="name">Beginners<br/>Sparring</div></div>
-        <div class="slot" data-keys="beginners"><div class="time">7:30pm – 8:15pm</div><div class="name">Beginners</div></div>
+<section class="tt4">
+<header class="tt4-head"><h1>Class Timetable</h1><p class="sub">Weekly schedule</p></header>
+<div class="tt4-filters">
+<label><input type="checkbox" class="tt4-filter" data-key="kids" checked><span>Kids (4–7)</span></label>
+<label><input type="checkbox" class="tt4-filter" data-key="juniors" checked><span>Juniors (8–12)</span></label>
+<label><input type="checkbox" class="tt4-filter" data-key="beginners" checked><span>Beginners (incl. sparring/clinch)</span></label>
+<label><input type="checkbox" class="tt4-filter" data-key="advanced" checked><span>Advanced (incl. sparring/clinch)</span></label>
 </div>
-
-      <!-- Tuesday -->
-      <div class="tt4-cell">
-        <div class="slot" data-keys="kids"><div class="time">4:15pm</div><div class="name">Mini Purebreds<br/>4–7 yo</div></div>
-        <div class="slot" data-keys="juniors"><div class="time">4:45pm</div><div class="name">Junior Purebreds<br/>8–12 yo</div></div>
-        <div class="slot" data-keys="advanced"><div class="time">5:30pm – 6:30pm</div><div class="name">Intermediate<br/>Advanced</div></div>
-        <div class="slot" data-keys="beginners"><div class="time">6:30pm – 7:30pm</div><div class="name">Beginners</div></div>
-        <div class="slot" data-keys="advanced"><div class="time">6:30pm – 7:00pm</div><div class="name">Intermediate / Advanced<br/>Sparring/Clinch</div></div>
-        <div class="slot" data-keys="beginners"><div class="time">7:30pm – 8:15pm</div><div class="name">Beginners</div></div>
-      </div>
-
-      <!-- Wednesday -->
-      <div class="tt4-cell">
-                <div class="slot" data-keys="juniors"><div class="time">4:45pm – 5:30pm</div><div class="name">Junior Purebreds<br/>8–12 yo</div></div>
-<div class="slot" data-keys="advanced"><div class="time">5:30pm – 6:30pm</div><div class="name">Intermediate<br/>Advanced</div></div>
-        <div class="slot" data-keys="advanced"><div class="time">6:30pm – 7:00pm</div><div class="name">Intermediate / Advanced<br/>Sparring/Clinch</div></div>
-        <div class="slot" data-keys="beginners"><div class="time">6:30pm – 7:30pm</div><div class="name">Beginners</div></div>
-      </div>
-
-      <!-- Thursday -->
-      <div class="tt4-cell">
-        <div class="slot" data-keys="kids"><div class="time">4:15pm</div><div class="name">Mini Purebreds<br/>4–7 yo</div></div>
-        <div class="slot" data-keys="juniors"><div class="time">4:45pm</div><div class="name">Junior Purebreds<br/>8–12 yo</div></div>
-        <div class="slot" data-keys="advanced"><div class="time">5:30pm – 6:30pm</div><div class="name">Intermediate<br/>Advanced</div></div>
-        <div class="slot" data-keys="beginners"><div class="time">6:30pm – 7:30pm</div><div class="name">Beginners</div></div>
-        <div class="slot" data-keys="beginners"><div class="time">7:30pm</div><div class="name">Beginners<br/>Sparring</div></div>
-      </div>
-
-      <!-- Friday -->
-      <div class="tt4-cell">
-        <div class="slot"><div class="time">5:30pm – 7:00pm</div><div class="name">All Levels</div></div>
-      </div>
-
-      <!-- Saturday -->
-      <div class="tt4-cell">
-                <div class="slot" data-keys="juniors"><div class="time">8:15am – 9:00am</div><div class="name">Junior Purebreds<br/>8–12 yo</div></div>
-<div class="slot"><div class="time">9:00am – 10:00am</div><div class="name">All Levels</div></div>
-      </div>
-
-      <!-- Sunday -->
-      <div class="tt4-cell closed">
-        <div class="slot"><div class="name">CLOSED</div></div>
-      </div>
-    </div>
-  </section>
-  <!-- End interactive timetable -->
-</div><footer class="footer"><div class="container inner">
-  <div><div class="notice">© Purebred Muay Thai</div></div>
-  <div class="notice">1/8 Samantha Place, Smeaton Grange • 02 4626 7073</div>
-</div></footer><script src="script.js"></script>
-<script>
-// Auto-filter timetable by ?program=kids|juniors|teens|adults
-(function(){
-  if (!/timetable/i.test(document.title)) return;
-  const params = new URLSearchParams(location.search);
-  const p = params.get('program');
-  if (!p) return;
-  function apply(){
-    const filters = document.querySelectorAll('.tt4-filter'); // checkbox inputs
-    if (!filters.length) return;
-    // First, unchecked all
-    filters.forEach(f=> f.checked = false);
-    // Apply program mapping
-    filters.forEach(f=>{
-      const key = f.getAttribute('data-key');
-      if (p === 'kids'    && key === 'kids') f.checked = true;
-      if (p === 'mini'    && key === 'kids') f.checked = true; // Mini program shows all kids (4–7yo)
-      if (p === 'juniors' && key === 'juniors') f.checked = true;
-      if (p === 'teens'   && key === 'beginners') f.checked = true; // Teens map to beginners
-      if (p === 'adults'  && (key === 'beginners' || key === 'advanced')) f.checked = true; // Adults = both
-    });
-    // Fire change to update view
-    filters.forEach(f=> f.dispatchEvent(new Event('change', {bubbles:true})));
-  }
-  window.addEventListener('DOMContentLoaded', ()=> setTimeout(apply, 50));
-})();
-</script>
-
+<div class="tt4-grid" aria-live="polite"></div>
+</section>
+</div>
+<footer class="footer"><div class="container inner"><div><div class="notice">© Purebred Muay Thai</div></div><div class="notice">1/8 Samantha Place, Smeaton Grange • 02 4626 7073</div></div></footer>
+<script src="timetable.js"></script>
 </body></html>
