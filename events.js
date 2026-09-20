@@ -8,7 +8,7 @@
     const x=new Date(d+"T00:00:00");
     return isNaN(x)?d:x.toLocaleDateString("en-AU",{weekday:"short",day:"numeric",month:"long",year:"numeric"});
   };
-  fetch("data/events.json",{cache:"no-store"})
+  fetch("/.netlify/functions/public-data?type=events",{cache:"no-store"})
     .then(r=>{if(!r.ok) throw new Error("Unable to load events");return r.json()})
     .then(data=>{
       const events=(data.events||[]).filter(e=>e.show!==false).sort((a,b)=>String(a.date||"").localeCompare(String(b.date||"")));
