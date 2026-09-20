@@ -91,7 +91,7 @@
     grid.before(tabs, label);
     show(0);
   }
-  fetch("data/timetable.json", {cache:"no-store"})
+  fetch("/.netlify/functions/public-data?type=timetable", {cache:"no-store"})
     .then(r => { if (!r.ok) throw new Error("Unable to load timetable"); return r.json(); })
     .then(render)
     .catch(() => { grid.innerHTML = '<div class="tt4-load-error">Timetable temporarily unavailable.</div>'; });
