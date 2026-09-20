@@ -1,11 +1,11 @@
 const crypto=require("crypto");
 const json=(status,body)=>({statusCode:status,headers:{"content-type":"application/json","cache-control":"no-store"},body:JSON.stringify(body)});
 function key(){
-  const u=process.env.ADMIN_USERNAME||"", p=process.env.ADMIN_PASSWORD||"";
+  const u="Adam", p=process.env.ADMIN_PASSWORD||"";
   return crypto.createHash("sha256").update("purebred-admin-v1:"+u+":"+p).digest();
 }
 function verify(token){
-  if(!token||!process.env.ADMIN_USERNAME||!process.env.ADMIN_PASSWORD)return false;
+  if(!token||!process.env.ADMIN_PASSWORD)return false;
   const parts=token.split("."); if(parts.length!==2)return false;
   const p=parts[0], s=parts[1];
   const good=crypto.createHmac("sha256",key()).update(p).digest("base64url");
