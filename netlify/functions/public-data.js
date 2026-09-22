@@ -6,7 +6,7 @@ exports.handler=async(event)=>{
   try{
     const mod=await import("@netlify/blobs");
     mod.connectLambda(event);
-    const store=mod.getStore({name:"purebred-admin",consistency:"strong"});
+    const store=mod.getStore("purebred-admin");
     const saved=await store.get(type,{type:"json"});
     if(saved) return json(200,saved);
   }catch(e){}
