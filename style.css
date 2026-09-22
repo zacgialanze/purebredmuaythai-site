@@ -800,3 +800,7 @@ body.timetable-page .tt-selected-day{
   .home-page > .footer { background: var(--bg); }
   .home-page > .footer .inner { padding: 16px 0; }
 }
+
+/* Preserve the proportions of the supplied logo artwork. */
+.logo img { object-fit: contain; }
+.home-page .home-hero .hero-logo img { object-fit: contain; }
