@@ -764,7 +764,8 @@ body.timetable-page .tt-selected-day{
   .home-page .nav .links a { padding: 10px 6px; font-size: 13px; }
   .home-page .about-hero.home-hero {
     height: auto;
-    min-height: 0;
+    min-height: calc(100vh - 113px);
+    min-height: calc(100svh - 113px);
     display: flex;
     justify-content: flex-start;
     padding: 24px 0 36px;
