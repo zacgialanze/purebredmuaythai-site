@@ -120,9 +120,7 @@
 <footer class="footer"><div class="container inner">
   <div><div class="notice">© Purebred Muay Thai</div></div>
   <div class="notice">1/8 Samantha Place, Smeaton Grange • 02 4626 7073</div>
-</div></footer><script>
-  window.REVIEWS_CONFIG = { apiKey: "AIzaSyCQSpSaCULnRufeU3-miR0huSnPYKnvIW8", placeId: "ChIJaR-gDpzxEmsRSEr9VVx4-ss" };
-</script>
+</div></footer>
 <script src="script.js"></script>
 
 
@@ -154,318 +152,35 @@
 
 
 
-<script>
-(function(){
-  const GMAPS_KEY = "AIzaSyCQSpSaCULnRufeU3-miR0huSnPYKnvIW8";
-  const PLACE_ID  = "ChIJaR-gDpzxEmsRSEr9VVx4-ss";
-  const stickersEl = document.getElementById("review-stickers");
-  const MOBILE_MAX = 900;
-  const MOBILE_SWAP_MS = 4000; // keep 4s as you asked
 
-  function stars(r){ const full=Math.round(r||5); return '<div class="stars">'+[1,2,3,4,5].map(i=>`<span>${i<=full?'★':'☆'}</span>`).join('')+'</div>'; }
-  const safe = (s)=> (s||'').replace(/</g,'&lt;');
-
-  function makeSticker(r){
-    const el = document.createElement('article');
-    el.className = 'sticker';
-    el.innerHTML = `
-      <div class="head">
-        <img src="${r.profile_photo_url||''}" alt="" onerror="this.style.display='none'"/>
-        <div>
-          <div class="name">${safe(r.author_name)||'Google user'}</div>
-          <div class="time">${safe(r.relative_time_description)||''}</div>
-        </div>
-      </div>
-      ${stars(r.rating)}
-      <div class="text">${safe(r.text||r.original_text||'')}</div>
-      <div class="btn-row">
-        <button class="read-more" type="button">Read more</button>
-        <button class="read-less" type="button" style="display:none">Read less</button>
-      </div>
-    `;
-    const more = el.querySelector('.read-more');
-    const less = el.querySelector('.read-less');
-    function expand(){
-      el.classList.add('expanded');
-      more.style.display = 'none';
-      less.style.display = 'inline-block';
-    }
-    function collapse(){
-      el.classList.remove('expanded');
-      less.style.display = 'none';
-      more.style.display = 'inline-block';
-    }
-    more.addEventListener('click', (e)=>{ e.stopPropagation(); expand(); });
-    less.addEventListener('click', (e)=>{ e.stopPropagation(); collapse(); });
-    el.addEventListener('click', ()=>{
-      if (el.classList.contains('expanded')) collapse(); else expand();
-    });
-    return el;
-  }
-
-  function loadGoogle(){
-    return new Promise((resolve, reject)=>{
-      if (window.google && window.google.maps) return resolve();
-      const s = document.createElement('script');
-      s.src = 'https://maps.googleapis.com/maps/api/js?key='+encodeURIComponent(GMAPS_KEY)+'&libraries=places';
-      s.async = true;
-      s.onerror = ()=> reject(new Error('google js failed'));
-      s.onload = ()=> resolve();
-      document.head.appendChild(s);
-    });
-  }
-
-  function shuffle(arr){
-    for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; }
-    return arr;
-  }
-  function pickGood(reviews){ return (reviews||[]).filter(r => (r.rating||0) >= 4); }
-  function isMobile(){ return window.innerWidth <= MOBILE_MAX; }
-
-  function renderDesktop(good){
-    stickersEl.innerHTML = '';
-    good.slice(0,3).forEach(r => stickersEl.appendChild(makeSticker(r)));
-  }
-
-  // Mobile swap with swoosh
-  let timer = null, idx = 0;
-  function mountStickerAnimated(r){
-    const old = stickersEl.querySelector('.sticker');
-    const next = makeSticker(r);
-    if (!old){
-      next.classList.add('enter');
-      stickersEl.innerHTML = '';
-      stickersEl.appendChild(next);
-      requestAnimationFrame(()=>{
-        next.classList.add('enter-active');
-        next.classList.remove('enter');
-      });
-      return;
-    }
-    // phase out old
-    old.classList.add('exit');
-    requestAnimationFrame(()=>{
-      old.classList.add('exit-active');
-    });
-    const onEnd = ()=>{
-      old.removeEventListener('transitionend', onEnd);
-      if (old.parentNode) old.parentNode.removeChild(old);
-      next.classList.add('enter');
-      stickersEl.appendChild(next);
-      requestAnimationFrame(()=>{
-        next.classList.add('enter-active');
-        next.classList.remove('enter');
-      });
-    };
-    old.addEventListener('transitionend', onEnd);
-  }
-
-  function startMobileCycle(good){
-    stopMobileCycle();
-    const tick = ()=>{
-      const expanded = stickersEl.querySelector('.sticker.expanded');
-      if (!expanded){
-        const r = good[idx % good.length];
-        mountStickerAnimated(r);
-        idx++;
-      }
-    };
-    tick(); // initial
-    timer = setInterval(tick, MOBILE_SWAP_MS);
-  }
-  function stopMobileCycle(){
-    if (timer){ clearInterval(timer); timer = null; }
-  }
-
-  async function init(){
-    if (location.protocol === 'file:') return;
-    try{
-      await loadGoogle();
-      const service = new google.maps.places.PlacesService(document.createElement('div'));
-      const details = await new Promise((res, rej)=>{
-        service.getDetails({ placeId: PLACE_ID, fields: ['reviews'] },
-          (place, status)=> status===google.maps.places.PlacesServiceStatus.OK ? res(place||{}) : rej(status));
-      });
-      const good = shuffle(pickGood(details.reviews||[]).slice());
-      if (!good.length) return;
-
-      function mount(){
-        if (isMobile()){
-          startMobileCycle(good);
-        }else{
-          stopMobileCycle();
-          renderDesktop(good);
-        }
-      }
-      mount();
-      window.addEventListener('resize', ()=>{
-        const currentlyMobile = window.innerWidth <= MOBILE_MAX;
-        if (currentlyMobile && !timer){ startMobileCycle(good); }
-        if (!currentlyMobile && timer){ stopMobileCycle(); renderDesktop(good); }
-      });
-    }catch(e){
-      console.warn('Reviews error', e);
-    }
-  }
-  document.addEventListener('DOMContentLoaded', init);
-})();
-</script>
 
 
 <script>
 (function(){
-  const GMAPS_KEY = "AIzaSyCQSpSaCULnRufeU3-miR0huSnPYKnvIW8";
-  const PLACE_ID  = "ChIJaR-gDpzxEmsRSEr9VVx4-ss";
-  const stickersEl = document.getElementById("review-stickers");
-  const MOBILE_MAX = 900;
-  const SWAP_MS = 4000;
-
-  const backup = [
-    {type:'img', src:'assets/review_backup_1.png', alt:'Member review 1'},
-    {type:'img', src:'assets/review_backup_2.png', alt:'Member review 2'},
-    {type:'img', src:'assets/review_backup_3.png', alt:'Member review 3'},
+  const host=document.getElementById("review-stickers");
+  if(!host)return;
+  const reviews=[
+    ["assets/review_backup_1.png","Member review 1"],
+    ["assets/review_backup_2.png","Member review 2"],
+    ["assets/review_backup_3.png","Member review 3"]
   ];
-
-  function stars(r){ const full=Math.round(r||5); return '<div class="stars">'+[1,2,3,4,5].map(i=>`<span>${i<=full?'★':'☆'}</span>`).join('')+'</div>'; }
-  const safe = (s)=> (s||'').replace(/</g,'&lt;');
-  const isMobile = ()=> window.innerWidth <= MOBILE_MAX;
-
-  function makeStickerFromReview(r){
-    const el = document.createElement('article');
-    el.className = 'sticker';
-    el.innerHTML = `
-      <div class="head">
-        <img src="${r.profile_photo_url||''}" alt="" onerror="this.style.display='none'"/>
-        <div>
-          <div class="name">${safe(r.author_name||'')}</div>
-          <div class="time">${safe(r.relative_time_description||'')}</div>
-        </div>
-      </div>
-      ${stars(r.rating)}
-      <div class="text">${safe(r.text||r.original_text||'')}</div>
-      <div class="btn-row">
-        <button class="read-more" type="button">Read more</button>
-        <button class="read-less" type="button" style="display:none">Read less</button>
-      </div>`;
-    const more = el.querySelector('.read-more');
-    const less = el.querySelector('.read-less');
-    function expand(){ el.classList.add('expanded'); more.style.display='none'; less.style.display='inline-block'; }
-    function collapse(){ el.classList.remove('expanded'); less.style.display='none'; more.style.display='inline-block'; }
-    more.addEventListener('click', (e)=>{ e.stopPropagation(); expand(); });
-    less.addEventListener('click', (e)=>{ e.stopPropagation(); collapse(); });
-    el.addEventListener('click', ()=>{ if (el.classList.contains('expanded')) collapse(); else expand(); });
-    return el;
-  }
-
-  function makeStickerFromBackup(b){
-    const el = document.createElement('article');
-    el.className = 'sticker';
-    el.innerHTML = \`
-      <img class="backup-review" src="\${b.src}" alt="\${b.alt}" style="width:100%;height:auto;border-radius:12px;display:block" />
-    \`;
-    return el;
-  }
-
-  // Animation helpers (swoosh)
-  function mountAnimated(nextEl){
-    const old = stickersEl.querySelector('.sticker');
-    if (!old){
-      nextEl.classList.add('enter');
-      stickersEl.innerHTML = '';
-      stickersEl.appendChild(nextEl);
-      requestAnimationFrame(()=>{ nextEl.classList.add('enter-active'); nextEl.classList.remove('enter'); });
-      return;
-    }
-    old.classList.add('exit');
-    requestAnimationFrame(()=>{ old.classList.add('exit-active'); });
-    const done = ()=>{
-      old.removeEventListener('transitionend', done);
-      if (old.parentNode) old.parentNode.removeChild(old);
-      nextEl.classList.add('enter');
-      stickersEl.appendChild(nextEl);
-      requestAnimationFrame(()=>{ nextEl.classList.add('enter-active'); nextEl.classList.remove('enter'); });
-    };
-    old.addEventListener('transitionend', done);
-  }
-
-  let timer = null, idx = 0;
-
-  function startMobileCycleFromReviews(revs){
-    stopCycle();
-    const tick = ()=>{
-      const expanded = stickersEl.querySelector('.sticker.expanded');
-      if (!expanded){
-        const r = revs[idx % revs.length];
-        mountAnimated(makeStickerFromReview(r));
-        idx++;
-      }
-    };
-    tick();
-    timer = setInterval(tick, SWAP_MS);
-  }
-
-  function startMobileCycleFromBackup(){
-    stopCycle();
-    const tick = ()=>{
-      const expanded = stickersEl.querySelector('.sticker.expanded');
-      if (!expanded){
-        const b = backup[idx % backup.length];
-        mountAnimated(makeStickerFromBackup(b));
-        idx++;
-      }
-    };
-    tick();
-    timer = setInterval(tick, SWAP_MS);
-  }
-
-  function stopCycle(){ if (timer){ clearInterval(timer); timer = null; } }
-
-  function renderDesktop(revs){
-    // 3 static cards from reviews (fallback: 1st backup as static trio not desired; leave empty if no reviews)
-    stickersEl.innerHTML = '';
-    (revs||[]).slice(0,3).forEach(r => stickersEl.appendChild(makeStickerFromReview(r)));
-  }
-
-  function loadGoogle(){
-    return new Promise((resolve, reject)=>{
-      if (window.google && window.google.maps) return resolve();
-      const s = document.createElement('script');
-      s.src = 'https://maps.googleapis.com/maps/api/js?key='+encodeURIComponent(GMAPS_KEY)+'&libraries=places';
-      s.async = true;
-      s.onerror = ()=> reject(new Error('google js failed'));
-      s.onload = ()=> resolve();
-      document.head.appendChild(s);
+  let index=0;
+  const mobile=window.matchMedia("(max-width: 900px)");
+  function render(){
+    host.replaceChildren();
+    const visible=mobile.matches?[reviews[index%reviews.length]]:reviews;
+    visible.forEach(([src,alt])=>{
+      const card=document.createElement("article");
+      card.className="sticker";
+      const image=document.createElement("img");
+      image.src=src;image.alt=alt;
+      image.style.cssText="width:100%;height:auto;border-radius:12px;display:block";
+      card.appendChild(image);host.appendChild(card);
     });
   }
-
-  async function init(){
-    // If file://, Google will fail; treat as fallback
-    const usingFile = location.protocol === 'file:';
-    if (usingFile){
-      if (isMobile()) startMobileCycleFromBackup();
-      return;
-    }
-    try{
-      await loadGoogle();
-      const svc = new google.maps.places.PlacesService(document.createElement('div'));
-      const details = await new Promise((res, rej)=>{
-        svc.getDetails({ placeId: PLACE_ID, fields:['reviews'] },
-          (place, status)=> status===google.maps.places.PlacesServiceStatus.OK ? res(place||{}) : rej(status));
-      });
-      const good = (details.reviews||[]).filter(r => (r.rating||0) >= 4);
-      if (isMobile()) startMobileCycleFromReviews(good);
-      else renderDesktop(good);
-      window.addEventListener('resize', ()=>{
-        const m = isMobile();
-        if (m && !timer){ idx=0; startMobileCycleFromReviews(good); }
-        if (!m && timer){ stopCycle(); renderDesktop(good); }
-      });
-    }catch(e){
-      // Fallback to backup assets
-      if (isMobile()) startMobileCycleFromBackup();
-    }
-  }
-  document.addEventListener('DOMContentLoaded', init);
+  render();
+  mobile.addEventListener("change",render);
+  setInterval(()=>{if(mobile.matches){index++;render()}},4000);
 })();
 </script>
 
