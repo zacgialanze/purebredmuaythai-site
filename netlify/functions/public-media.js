@@ -5,7 +5,7 @@ exports.handler=async(event)=>{
   try{
     const mod=await import("@netlify/blobs");
     mod.connectLambda(event);
-    const store=mod.getStore({name:"purebred-admin",consistency:"strong"});
+    const store=mod.getStore("purebred-admin");
     const entry=await store.getWithMetadata(key,{type:"arrayBuffer"});
     if(!entry||!entry.data) return {statusCode:404,body:"Not found"};
     const contentType=(entry.metadata&&entry.metadata.contentType)||"application/octet-stream";
