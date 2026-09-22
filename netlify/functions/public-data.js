@@ -5,7 +5,8 @@ exports.handler=async(event)=>{
   if(type!=="timetable"&&type!=="events") return json(400,{error:"Invalid type"});
   try{
     const mod=await import("@netlify/blobs");
-    const store=mod.getStore("purebred-admin");
+    mod.connectLambda(event);
+    const store=mod.getStore({name:"purebred-admin",consistency:"strong"});
     const saved=await store.get(type,{type:"json"});
     if(saved) return json(200,saved);
   }catch(e){}
