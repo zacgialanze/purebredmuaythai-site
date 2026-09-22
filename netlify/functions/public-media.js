@@ -4,7 +4,8 @@ exports.handler=async(event)=>{
   if(!key||!key.startsWith("event-images/")) return {statusCode:400,body:"Invalid key"};
   try{
     const mod=await import("@netlify/blobs");
-    const store=mod.getStore("purebred-admin");
+    mod.connectLambda(event);
+    const store=mod.getStore({name:"purebred-admin",consistency:"strong"});
     const entry=await store.getWithMetadata(key,{type:"arrayBuffer"});
     if(!entry||!entry.data) return {statusCode:404,body:"Not found"};
     const contentType=(entry.metadata&&entry.metadata.contentType)||"application/octet-stream";
