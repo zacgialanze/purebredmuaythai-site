@@ -68,9 +68,10 @@ function classRow(c,ci){
     '</select><button class="danger del-class">Delete</button></div>';
 }
 function renderTimetable(){
-  $("#timetableEditor").innerHTML=timetable.days.map((d,di)=>
-    '<div class="day-card" data-day="'+di+'"><div class="day-head"><h3>'+esc(d.day)+'</h3><button class="ghost add-class">+ Add class</button></div><div class="classes">'+
-    (d.classes||[]).map((c,ci)=>classRow(c,ci)).join("")+'</div></div>'
+  const openDays=new Set(Array.from(document.querySelectorAll(".day-card[open]")).map(card=>card.dataset.day));
+  $("#timetableEditor").innerHTML='<p class="small">Tap a day to edit its classes. When finished, choose Save timetable.</p>'+timetable.days.map((d,di)=>
+    '<details class="day-card" data-day="'+di+'"'+(openDays.has(String(di))?' open':'')+'><summary class="day-summary">'+esc(d.day)+'</summary><div class="day-content"><button class="ghost add-class">+ Add class</button><div class="classes">'+
+    (d.classes||[]).map((c,ci)=>classRow(c,ci)).join("")+'</div></div></details>'
   ).join("");
   bindTimetable();
 }
