@@ -19,7 +19,8 @@ exports.handler=async(event)=>{
   let body; try{body=JSON.parse(event.body||"{}")}catch{return json(400,{error:"Invalid JSON"})}
   try{
     const mod=await import("@netlify/blobs");
-    const store=mod.getStore("purebred-admin");
+    mod.connectLambda(event);
+    const store=mod.getStore({name:"purebred-admin",consistency:"strong"});
     if(body.action==="save-timetable"){
       await store.setJSON("timetable",body.data||{days:[]});
       return json(200,{ok:true});
